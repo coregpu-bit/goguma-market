@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+}
+
+/* 고구마 등장 애니메이션 */
+@keyframes goguma-appear {
+  0%   { transform: scale(0) rotate(-30deg); opacity: 0; }
+  65%  { transform: scale(1.25) rotate(8deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 고구마 흔들며 인사 */
+@keyframes goguma-wave {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  20%  { transform: rotate(-22deg) translateY(-7px); }
+  40%  { transform: rotate(22deg)  translateY(-9px); }
+  60%  { transform: rotate(-16deg) translateY(-5px); }
+  80%  { transform: rotate(16deg)  translateY(-7px); }
+}
+
+/* 말풍선 등장/퇴장 */
+@keyframes goguma-speech {
+  0%, 12%        { opacity: 0; transform: translateX(-50%) translateY(6px) scale(0.8); }
+  22%, 72%       { opacity: 1; transform: translateX(-50%) translateY(0)   scale(1);   }
+  84%, 100%      { opacity: 0; transform: translateX(-50%) translateY(-4px) scale(0.9); }
+}
+
+.goguma-char {
+  display: inline-block;
+  animation:
+    goguma-appear 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+    goguma-wave   1.9s ease-in-out 0.7s infinite;
+}
+
+.goguma-bubble {
+  position: absolute;
+  left: 50%;
+  top: -2.6rem;
+  white-space: nowrap;
+  animation: goguma-speech 3.2s ease-in-out 0.9s infinite;
+  pointer-events: none;
+}
