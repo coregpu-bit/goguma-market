@@ -4,8 +4,8 @@ import Navbar from '@/components/Navbar'
 import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
-  title: '고구마켓 - 우리 동네 중고거래',
-  description: '고구마켓에서 가까운 이웃과 중고 거래를 시작해보세요.',
+  title: '쑥쑥 고구마켓 - 우리 동네 중고거래',
+  description: '쑥쑥 고구마켓에서 가까운 이웃과 중고 거래를 시작해보세요.',
 }
 
 export default async function RootLayout({

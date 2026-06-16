@@ -19,7 +19,7 @@ export default function SignupPage() {
             <GomuCharacter size={80} />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">회원가입</h1>
-          <p className="text-sm text-gray-500 mt-1">고구마켓 이웃이 되어주세요!</p>
+          <p className="text-sm text-gray-500 mt-1">쑥쑥 고구마켓 이웃이 되어주세요!</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">

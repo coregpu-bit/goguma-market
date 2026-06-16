@@ -18,7 +18,7 @@ export default async function DashboardPage() {
 
   const { data: products } = await supabase
     .from('products')
-    .select('id, title, price, category, condition, status, created_at, image_urls')
+    .select('id, title, price, category, condition, status, created_at, image_urls, like_count')
     .order('created_at', { ascending: false })
     .limit(20)
 
@@ -28,7 +28,7 @@ export default async function DashboardPage() {
       <div className="bg-gradient-to-r from-violet-500 to-violet-600 rounded-2xl p-6 mb-8 text-white shadow-md shadow-violet-200 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-300">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-violet-200 text-sm mb-1">우리 동네 고구마켓</p>
+            <p className="text-violet-200 text-sm mb-1">우리 동네 쑥쑥 고구마켓</p>
             <h2 className="text-2xl font-bold">
               안녕하세요, {nickname}님! 👋
             </h2>

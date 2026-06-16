@@ -12,7 +12,7 @@ export default async function Home() {
         <HomeHero />
         <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 leading-tight">
           우리 동네<br />
-          <span className="text-violet-600">고구마켓</span>
+          <span className="text-violet-600">쑥쑥 고구마켓</span>
         </h1>
         <p className="text-lg text-gray-500 mb-10 max-w-md">
           가까운 이웃과 중고 물건을 사고팔아요.<br />
@@ -40,7 +40,7 @@ export default async function Home() {
       <section className="bg-white py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-10">
-            고구마켓이 특별한 이유
+            쑥쑥 고구마켓이 특별한 이유
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
@@ -63,7 +63,7 @@ export default async function Home() {
 
       {/* Footer */}
       <footer className="text-center py-6 text-xs text-gray-400 bg-white border-t border-gray-100">
-        © 2026 고구마켓 · 개발 학습용 프로젝트
+        © 2026 쑥쑥 고구마켓 · 개발 학습용 프로젝트
       </footer>
     </div>
   )

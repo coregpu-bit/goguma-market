@@ -14,7 +14,7 @@ export default function Navbar({ user }: NavbarProps) {
       <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-1.5 font-bold text-xl text-violet-600 hover:text-violet-700 transition-colors">
           <GomuCharacter size={30} />
-          <span>고구마켓</span>
+          <span>쑥쑥 고구마켓</span>
         </Link>
 
         <nav className="flex items-center gap-3">

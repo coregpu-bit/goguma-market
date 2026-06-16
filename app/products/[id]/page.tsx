@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import ProductActions from '@/components/ProductActions'
 import ImageGallery from '@/components/ImageGallery'
+import LikeButton from '@/components/LikeButton'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('ko-KR', {
@@ -28,6 +29,17 @@ export default async function ProductDetailPage({
   if (!product) notFound()
 
   const isOwner = user?.id === product.seller_id
+
+  let liked = false
+  if (user) {
+    const { data: myLike } = await supabase
+      .from('likes')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('product_id', id)
+      .maybeSingle()
+    liked = !!myLike
+  }
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
@@ -75,6 +87,17 @@ export default async function ProductDetailPage({
             <span className="text-xs bg-violet-50 text-violet-600 px-3 py-1 rounded-full font-medium">
               {product.condition}
             </span>
+          </div>
+
+          <hr className="border-gray-100" />
+
+          {/* 관심(좋아요) */}
+          <div className="flex flex-col items-center py-2">
+            <LikeButton
+              productId={product.id}
+              initialCount={product.like_count ?? 0}
+              initialLiked={liked}
+            />
           </div>
 
           <hr className="border-gray-100" />

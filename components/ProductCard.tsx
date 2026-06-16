@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import GogumaSprout from '@/components/GogumaSprout'
 
 type Product = {
   id: string
@@ -9,6 +10,7 @@ type Product = {
   status: string
   created_at: string
   image_urls: string[] | null
+  like_count: number
 }
 
 const POSTIT_BG = [
@@ -81,7 +83,13 @@ export default function ProductCard({ product, index }: { product: Product; inde
       <div className="mt-1 space-y-0.5">
         <p className="font-semibold text-gray-800 text-sm line-clamp-2 leading-snug">{product.title}</p>
         <p className="font-bold text-gray-900 text-sm">{product.price.toLocaleString()}원</p>
-        <p className="text-xs text-gray-400">{product.category} · {timeAgo(product.created_at)}</p>
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-gray-400">{product.category} · {timeAgo(product.created_at)}</p>
+          <span className="flex items-center gap-0.5 text-xs text-gray-500">
+            <GogumaSprout count={product.like_count} size={18} />
+            {product.like_count}
+          </span>
+        </div>
       </div>
     </Link>
   )

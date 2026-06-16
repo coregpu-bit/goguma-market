@@ -33,7 +33,7 @@ export default function LoginPage() {
             </div>
           </div>
           <h1 className="text-2xl font-bold text-gray-900">로그인</h1>
-          <p className="text-sm text-gray-500 mt-1">고구마켓에 오신 걸 환영해요!</p>
+          <p className="text-sm text-gray-500 mt-1">쑥쑥 고구마켓에 오신 걸 환영해요!</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
