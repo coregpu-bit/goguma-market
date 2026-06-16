@@ -2,29 +2,26 @@
 
 import { useState, useEffect } from 'react'
 import GomuCharacter from './GomuCharacter'
+import GogumaSprout from './GogumaSprout'
 
+// 성장 단계별 말풍선 (씨앗 → 다 자란 고구마)
 const GREETINGS = [
-  '안녕하세요! 👋',
-  '어서오세요! 🍠',
-  '반가워요! 😊',
-  '함께 거래해요! 🛍️',
-  '좋은 거래 하세요! ✨',
+  '씨앗을 심었어요 🌰',
+  '새싹이 돋았어요 🌱',
+  '쑥쑥 자라는 중 🌿',
+  '아기 고구마 등장 🍠',
+  '다 자랐어요! ✨',
 ]
 
 export default function HomeHero() {
-  const [index, setIndex] = useState(0)
-  const [show, setShow] = useState(true)
+  // 0~3: 자라는 새싹, 4: 다 자란 고구마 캐릭터
+  const [step, setStep] = useState(0)
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setShow(false)
-      setTimeout(() => {
-        setIndex(i => (i + 1) % GREETINGS.length)
-        setShow(true)
-      }, 350)
-    }, 2800)
-    return () => clearInterval(timer)
-  }, [])
+    const delay = step === 4 ? 2400 : 720
+    const timer = setTimeout(() => setStep(s => (s + 1) % 5), delay)
+    return () => clearTimeout(timer)
+  }, [step])
 
   return (
     <div className="relative inline-block mb-6">
@@ -34,13 +31,10 @@ export default function HomeHero() {
         style={{ transform: 'translateX(-50%)' }}
       >
         <div
-          className="relative bg-violet-600 text-white text-sm font-semibold px-4 py-2 rounded-full shadow-md whitespace-nowrap transition-all duration-300"
-          style={{
-            opacity: show ? 1 : 0,
-            transform: show ? 'scale(1) translateY(0px)' : 'scale(0.9) translateY(5px)',
-          }}
+          key={step}
+          className="goguma-grow relative bg-violet-600 text-white text-sm font-semibold px-4 py-2 rounded-full shadow-md whitespace-nowrap"
         >
-          {GREETINGS[index]}
+          {GREETINGS[step]}
           {/* 말풍선 꼬리 */}
           <div
             className="absolute left-1/2 top-full"
@@ -56,9 +50,17 @@ export default function HomeHero() {
         </div>
       </div>
 
-      {/* 고구마 캐릭터 — 등장 후 이리저리 흔들기 */}
-      <div className="goguma-char">
-        <GomuCharacter size={110} />
+      {/* 고구마 — 씨앗부터 다 자란 고구마까지 성장 */}
+      <div className="flex items-end justify-center" style={{ height: 130, width: 130 }}>
+        {step < 4 ? (
+          <div key={`sprout-${step}`} className="goguma-grow">
+            <GogumaSprout count={step} size={130} />
+          </div>
+        ) : (
+          <div key="grown" className="goguma-char">
+            <GomuCharacter size={110} />
+          </div>
+        )}
       </div>
     </div>
   )
