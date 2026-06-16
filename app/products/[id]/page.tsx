@@ -4,6 +4,7 @@ import Link from 'next/link'
 import ProductActions from '@/components/ProductActions'
 import ImageGallery from '@/components/ImageGallery'
 import LikeButton from '@/components/LikeButton'
+import CommentSection, { type CommentRow, type Thread } from '@/components/CommentSection'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('ko-KR', {
@@ -40,6 +41,21 @@ export default async function ProductDetailPage({
       .maybeSingle()
     liked = !!myLike
   }
+
+  // 댓글 불러오기 (일반 댓글 + 답글을 묶어서 정리)
+  const { data: commentRows } = await supabase
+    .from('comments')
+    .select('id, user_id, parent_id, author_name, content, created_at, updated_at')
+    .eq('product_id', id)
+    .order('created_at', { ascending: true })
+
+  const rows = (commentRows ?? []) as CommentRow[]
+  const threads: Thread[] = rows
+    .filter(c => c.parent_id === null)
+    .map(c => ({
+      ...c,
+      replies: rows.filter(r => r.parent_id === c.id),
+    }))
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
@@ -114,6 +130,16 @@ export default async function ProductDetailPage({
 
           {/* 등록 정보 */}
           <p className="text-xs text-gray-400">등록일 {formatDate(product.created_at)}</p>
+
+          <hr className="border-gray-100" />
+
+          {/* 댓글 */}
+          <CommentSection
+            productId={product.id}
+            sellerId={product.seller_id}
+            currentUserId={user?.id ?? null}
+            comments={threads}
+          />
         </div>
       </div>
     </div>
