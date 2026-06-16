@@ -8,6 +8,7 @@ type Product = {
   condition: string
   status: string
   created_at: string
+  image_urls: string[] | null
 }
 
 const POSTIT_BG = [
@@ -61,10 +62,20 @@ export default function ProductCard({ product, index }: { product: Product; inde
         </span>
       )}
 
-      {/* 카테고리 이모지 */}
-      <div className="text-5xl text-center py-3">
-        {emoji}
-      </div>
+      {/* 대표 사진 또는 카테고리 이모지 */}
+      {product.image_urls?.[0] ? (
+        <div className="overflow-hidden rounded-md">
+          <img
+            src={product.image_urls[0]}
+            alt={product.title}
+            className="w-full h-24 object-cover"
+          />
+        </div>
+      ) : (
+        <div className="text-5xl text-center py-3">
+          {emoji}
+        </div>
+      )}
 
       {/* 내용 */}
       <div className="mt-1 space-y-0.5">

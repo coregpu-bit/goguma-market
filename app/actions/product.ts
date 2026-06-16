@@ -11,6 +11,7 @@ export async function createProduct(state: ProductState, formData: FormData): Pr
   const price = formData.get('price') as string
   const category = formData.get('category') as string
   const condition = formData.get('condition') as string
+  const image_urls = formData.getAll('image_urls') as string[]
 
   if (!title || !description || !price || !category || !condition) {
     return { error: '모든 항목을 입력해주세요.' }
@@ -33,6 +34,7 @@ export async function createProduct(state: ProductState, formData: FormData): Pr
     category,
     condition,
     seller_id: user.id,
+    image_urls,
   })
 
   if (error) {
@@ -49,6 +51,7 @@ export async function updateProduct(state: ProductState, formData: FormData): Pr
   const price = formData.get('price') as string
   const category = formData.get('category') as string
   const condition = formData.get('condition') as string
+  const image_urls = formData.getAll('image_urls') as string[]
 
   if (!title || !description || !price || !category || !condition) {
     return { error: '모든 항목을 입력해주세요.' }
@@ -66,7 +69,7 @@ export async function updateProduct(state: ProductState, formData: FormData): Pr
 
   const { error } = await supabase
     .from('products')
-    .update({ title, description, price: Number(price), category, condition })
+    .update({ title, description, price: Number(price), category, condition, image_urls })
     .eq('id', id)
     .eq('seller_id', user.id)
 
@@ -82,6 +85,26 @@ export async function deleteProduct(id: string): Promise<void> {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) redirect('/login')
+
+  // 이미지 Storage에서 삭제
+  const { data: product } = await supabase
+    .from('products')
+    .select('image_urls')
+    .eq('id', id)
+    .eq('seller_id', user.id)
+    .single()
+
+  if (product?.image_urls?.length) {
+    const paths = (product.image_urls as string[])
+      .map(url => {
+        const idx = url.indexOf('/product-images/')
+        return idx >= 0 ? url.slice(idx + '/product-images/'.length) : null
+      })
+      .filter((p): p is string => p !== null)
+    if (paths.length) {
+      await supabase.storage.from('product-images').remove(paths)
+    }
+  }
 
   await supabase.from('products').delete().eq('id', id).eq('seller_id', user.id)
 

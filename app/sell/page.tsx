@@ -4,6 +4,7 @@ import { useActionState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createProduct } from '@/app/actions/product'
+import ImageUploader from '@/components/ImageUploader'
 
 const CATEGORIES = ['디지털/가전', '의류/잡화', '가구/인테리어', '도서/음반', '스포츠/레저', '생활/주방', '기타']
 const CONDITIONS = [
@@ -27,6 +28,13 @@ export default function SellPage() {
 
       <div className="bg-white rounded-2xl border border-violet-100 p-6">
         <form action={action} className="space-y-5">
+          {/* 사진 */}
+          <div>
+            <p className="text-sm font-medium text-gray-700 mb-2">사진</p>
+            <ImageUploader />
+            <p className="text-xs text-gray-400 mt-1">최대 5장 · 파일당 5MB 이하</p>
+          </div>
+
           {/* 제목 */}
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">

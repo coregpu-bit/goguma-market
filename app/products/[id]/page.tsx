@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import ProductActions from '@/components/ProductActions'
+import ImageGallery from '@/components/ImageGallery'
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('ko-KR', {
@@ -38,10 +39,13 @@ export default async function ProductDetailPage({
       </div>
 
       <div className="bg-white rounded-2xl border border-violet-100 overflow-hidden">
-        {/* 이미지 자리 */}
-        <div className="w-full aspect-video bg-violet-50 flex items-center justify-center text-7xl">
-          🛍️
-        </div>
+        {product.image_urls?.length > 0 ? (
+          <ImageGallery urls={product.image_urls} />
+        ) : (
+          <div className="w-full aspect-video bg-violet-50 flex items-center justify-center text-7xl">
+            🛍️
+          </div>
+        )}
 
         <div className="p-6 space-y-5">
           {/* 제목 + 상태 */}
