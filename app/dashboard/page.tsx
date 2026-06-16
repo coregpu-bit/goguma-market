@@ -18,7 +18,7 @@ export default async function DashboardPage() {
 
   const { data: products } = await supabase
     .from('products')
-    .select('id, title, price, category, condition, status, created_at')
+    .select('id, title, price, category, condition, status, created_at, image_urls')
     .order('created_at', { ascending: false })
     .limit(20)
 
