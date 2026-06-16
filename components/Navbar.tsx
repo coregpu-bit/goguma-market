@@ -5,7 +5,7 @@ import { logout } from '@/app/actions/auth'
 import GomuCharacter from './GomuCharacter'
 
 interface NavbarProps {
-  user: { email?: string; nickname?: string } | null
+  user: { id: string; email?: string; nickname?: string } | null
 }
 
 export default function Navbar({ user }: NavbarProps) {
@@ -37,6 +37,12 @@ export default function Navbar({ user }: NavbarProps) {
                 className="text-sm text-gray-600 hover:text-violet-600 transition-colors"
               >
                 홈
+              </Link>
+              <Link
+                href={`/profile/${user.id}`}
+                className="text-sm text-gray-600 hover:text-violet-600 transition-colors"
+              >
+                내 프로필
               </Link>
               <form action={logout}>
                 <button

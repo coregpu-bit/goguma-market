@@ -20,6 +20,7 @@ export default async function RootLayout({
 
   const userInfo = user
     ? {
+        id: user.id,
         email: user.email,
         nickname: user.user_metadata?.nickname as string | undefined,
       }

@@ -31,6 +31,12 @@ export default async function ProductDetailPage({
 
   const isOwner = user?.id === product.seller_id
 
+  const { data: seller } = await supabase
+    .from('profiles')
+    .select('id, nickname, avatar_url')
+    .eq('id', product.seller_id)
+    .single()
+
   let liked = false
   if (user) {
     const { data: myLike } = await supabase
@@ -104,6 +110,29 @@ export default async function ProductDetailPage({
               {product.condition}
             </span>
           </div>
+
+          <hr className="border-gray-100" />
+
+          {/* 판매자 */}
+          {seller && (
+            <Link
+              href={`/profile/${seller.id}`}
+              className="flex items-center gap-3 -mx-2 px-2 py-2 rounded-xl hover:bg-violet-50 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-violet-100 flex items-center justify-center shrink-0">
+                {seller.avatar_url ? (
+                  <img src={seller.avatar_url} alt={seller.nickname} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-xl">🍠</span>
+                )}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs text-gray-400">판매자</p>
+                <p className="text-sm font-semibold text-gray-800 truncate">{seller.nickname}</p>
+              </div>
+              <span className="ml-auto text-xs text-violet-500 font-medium">프로필 보기 →</span>
+            </Link>
+          )}
 
           <hr className="border-gray-100" />
 
